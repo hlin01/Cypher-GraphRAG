@@ -27,7 +27,7 @@ llm = ChatOpenAI(temperature=0, model_name="gpt-4o")
 llm_transformer = LLMGraphTransformer(
     llm=llm,
     node_properties=False,
-    relationship_properties=False,
+    relationship_properties=False
 )
 documents = [Document(page_content=text)]
 graph_documents = llm_transformer.convert_to_graph_documents(documents)
@@ -45,7 +45,16 @@ graph.add_graph_documents(graph_documents)
 graph.refresh_schema()
 print(graph.get_schema)
 
-cypher_template = """
+examples = [
+    {
+        "question": "Who did CM meet?",
+        "query": "MATCH (a:Person {id: 'Cm'})-[:MET_WITH]->(b:Person) RETURN b.id",
+    }
+]
+
+example_prompt = PromptTemplate.from_template("{query}")
+
+prefix = """
 Your task is to directly translate natural language inquiry into precise and executable Cypher query for Memgraph database.
 You will utilize a provided database schema to understand the structure, nodes and relationships within the Memgraph database.
 
@@ -67,14 +76,21 @@ With all the above information and instructions, generate Cypher query for the u
 
 The question is:
 {question}
+
+Below are a number of examples of questions and their corresponding Cypher queries.
 """
 
-cypher_prompt = PromptTemplate(input_variables=["schema", "question"], template=cypher_template)
+cypher_prompt = FewShotPromptTemplate(
+    examples=examples,
+    example_prompt=example_prompt,
+    prefix=prefix,
+    suffix="User input: {question}\nCypher query: ",
+    input_variables=["question", "schema"]
+)
 
 chain = MemgraphQAChain.from_llm(
-    ChatOpenAI(temperature=0),
+    llm=llm,
     graph=graph,
-    model_name="gpt-4o",
     allow_dangerous_requests=True,
     verbose=True,
     return_intermediate_steps=True,
