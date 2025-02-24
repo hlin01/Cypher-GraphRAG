@@ -76,6 +76,6 @@ chain = MemgraphQAChain.from_llm(
     qa_prompt = qa_prompt
 )
 
-response = chain.invoke("What programs do people participate in, and who participates in what?")
+response = chain.invoke("What activities are there and who are they associated with?")
 print(f"Intermediate steps: {response['intermediate_steps']}")
 print(f"Final response: {response['result']}")
