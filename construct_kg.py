@@ -25,11 +25,51 @@ with open("anonymized_data_cl1.txt", "r") as f:
 llm = ChatOpenAI(temperature=0, model_name="gpt-4o")
 llm_transformer = LLMGraphTransformer(
     llm=llm,
+    allowed_nodes=[
+        "Case",
+        "Person",
+        "Organization",
+        "Location",
+        "Document",
+        "Communication",
+        "Event",
+        "Order",
+        "Program",
+        "Concept",
+        "Date",
+        "Time",
+        "Financial",
+        "Property",
+        "Account",
+        "System",
+        "Activity",
+        "ContactInfo",
+    ],
+    allowed_relationships=[
+        "ASSOCIATED_WITH",
+        "BELONGS_TO",
+        "LOCATED_AT",
+        "REFERENCES",
+        "CREATED_BY",
+        "PARTICIPATES_IN",
+        "CONNECTED_TO",
+        "LINKED_TO",
+        "HAS_STATUS",
+        "INCLUDES",
+        "OCCURRED_ON",
+        "HAS_CONTACT",
+        "USES",
+        "ASSIGNED_TO",
+        "EXCHANGES_WITH",
+        "OWNS",
+        "MADE_BY",
+        "AFFECTS",
+    ],
     node_properties=False,
     relationship_properties=False
 )
 
-documents = [Document(page_content=note.strip()) for note in notes[:10] if note.strip()]
+documents = [Document(page_content=note.strip()) for note in notes if note.strip()]
 graph_documents = llm_transformer.convert_to_graph_documents(documents)
 
 print(graph_documents)
