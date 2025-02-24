@@ -21,7 +21,7 @@ graph = MemgraphGraph(
     url=url, username=username, password=password, refresh_schema=False
 )
 
-# line 14
+# line 10 (wrapped)
 text = "CM arrived at CLs home 3pm as scheduled with CL. CL answered the door and met with CM outside. CL has a friend over and CL thought CM would not show up because of how CL communicated with CM yesterday. CM reminded CL that they scheduled this appointment last week and CM just spoke with CL yesterday. CM confirmed with CL that their application fee was paid online for the private landlord duplex in Leander. CL is depressed and broke up with their boyfriend. CL is not feeling hopeful about the future since CL admits to being co-dependent and likes always having a partner. CL has a friend over and does not want to meet with CM today. CLs friend is helping CL not return to substance use and CM suggested CL do something healthy and positive that makes them feel like themself. CL feels safe and supported by their friend. CL would possibly like to meet on Friday but is not sure yet. CL asked CM to call CL on Thursday. CM agreed to call CL Thursday and if CM does not hear from CL on Thursday, they will not meet on Friday. CL understands and agrees. CM and CL tentatively scheduled to meet Friday 8/19/22 at 2pm at CLs home. INCENTIVES GIVEN: 1 GIFT CARD."
 
 llm = ChatOpenAI(temperature=0, model_name="gpt-4o")
