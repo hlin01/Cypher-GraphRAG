@@ -36,8 +36,12 @@ Schema:
 Below are examples of questions and their corresponding Cypher queries. Use them to help you generate valid and correct queries.
 
 Example 1:
-Question: Who did Cl meet?
-Cypher query: MATCH (a:Person {{id: 'Cl'}})-[:MET_WITH]->(b:Person) RETURN b
+Question: Who did Cm call?
+Cypher query: MATCH (a:Person {{id: 'Cm'}})-[:CALLED]->(b:Person) RETURN b
+
+Example 2:
+Question: Who did Cm email?
+Cypher query: MATCH (c:Person {{id: 'Cm'}})-[:EMAILED]->(d:Person) RETURN d
 
 Generate the Cypher query for the following question.
 
@@ -53,9 +57,14 @@ You are an expert at analyzing information from knowledge graphs. Your task is t
 Below are examples of questions, their corresponding context, and appropriate answers. Use them to help formulate your response.
 
 Example 1:
-Question: Who did Cl meet?
-Context: [{{'b': {{'id': 'Cm'}}}}]
-Answer: Cl met with Cm.
+Question: Who did Cm call?
+Context: [{{'b': {{'id': 'Landlord'}}}}]
+Answer: Cm called Landlord.
+
+Example 2:
+Question: Who did Cm email?
+Context: [{{'d': {{'id': 'Pm'}}}}]
+Answer: Cm emailed Pm.
 
 Answer the following question using the provided context.
 
@@ -76,6 +85,6 @@ chain = MemgraphQAChain.from_llm(
     qa_prompt = qa_prompt
 )
 
-response = chain.invoke("What activities are there and who are they associated with?")
+response = chain.invoke("Tell me about Landlord's properties.")
 print(f"Intermediate steps: {response['intermediate_steps']}")
 print(f"Final response: {response['result']}")
