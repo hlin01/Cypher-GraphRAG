@@ -7,7 +7,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
 load_dotenv()
-os.environ["OPENAI_API_KEY"]
+openai_api_key = os.environ["OPENAI_API_KEY"]
 
 url = os.environ.get("MEMGRAPH_URI", "bolt://localhost:7687")
 username = os.environ.get("MEMGRAPH_USERNAME", "")
